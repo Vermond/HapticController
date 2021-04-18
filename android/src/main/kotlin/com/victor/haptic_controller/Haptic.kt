@@ -17,7 +17,7 @@ class Haptic(@NonNull context: Context) {
     private val intensityMax = 255
 
     val canHaptic
-    get() = vibrator.hasVibrator()
+    get() = vibrator.hasVibrator() 
 
     fun haptic() {
         if (!canHaptic) return
