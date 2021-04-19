@@ -7,7 +7,6 @@ import android.os.Vibrator
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import org.jetbrains.annotations.NotNull
-import java.time.Duration
 
 class Haptic(@NonNull context: Context) {
 
@@ -23,7 +22,6 @@ class Haptic(@NonNull context: Context) {
         if (!canHaptic) return
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            //VibrationEffect.createOneShot(1000, -1)
             vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(100), intArrayOf(255), -1))
         } else {
             @Suppress("DEPRECATION")
@@ -74,20 +72,18 @@ class Haptic(@NonNull context: Context) {
         var result:MutableList<Long> = mutableListOf()
 
         var lastTime:Long = 0
+        val max = if (delayTime.size > duration.size) duration.size else delayTime.size
 
-        for (i in delayTime.indices) {
-            val index = if (i >= duration.size) duration.lastIndex else i
+        for (i in 0 until max) {
 
-            //0 1 2
-            //0.5 0.5 1
+            val delay = delayTime[i].toMilliSecond()
+            val vibrate = duration[i].toMilliSecond()
+            val current = delay - lastTime
 
-            //.5 .5 .5 .5 1
+            result.add(current)
+            result.add(vibrate)
 
-
-
-
-            result.add(delayTime[i].toMilliSecond())
-            result.add(duration[index].toMilliSecond())
+            lastTime = delay + vibrate
         }
 
         return result.toLongArray()

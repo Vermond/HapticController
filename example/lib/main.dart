@@ -67,7 +67,17 @@ class _MyAppState extends State<MyApp> {
                   HapticController.hapticPattern(delayTime: delayTime, duration: duration, intensities: intensities);
                 },
                 child: Text('Haptic Pattern'),
-              )
+              ),
+              TextButton(
+                onPressed: () {
+                  List<double> delayTime = [1, 2, 3];
+                  List<double> duration = [0.1, 0.2, 0.3];
+                  List<double> intensities = [0.3, 0.5, 0.8];
+
+                  HapticController.hapticPattern(delayTime: delayTime, duration: duration, intensities: intensities);
+                },
+                child: Text('Haptic Pattern'),
+              ),
             ],
           ),
         ),

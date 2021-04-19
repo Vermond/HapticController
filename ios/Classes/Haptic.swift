@@ -54,7 +54,7 @@ class Haptic {
                 let ii = i >= intensities.count ? intensities.count - 1 : i
                 
                 let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: Float(intensities[ii]))
-                let event = CHHapticEvent(eventType: .hapticTransient, parameters: [intensity], relativeTime:delayTime[i], duration: duration[di])
+                let event = CHHapticEvent(eventType: .hapticContinuous, parameters: [intensity], relativeTime:delayTime[i], duration: duration[di])
                 
                 events.append(event)
             }
