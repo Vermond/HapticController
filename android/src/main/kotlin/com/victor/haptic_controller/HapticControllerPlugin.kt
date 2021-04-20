@@ -36,6 +36,26 @@ class HapticControllerPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(haptic.canHaptic)
         Log.i("haptic_test", "result : ${haptic.canHaptic}")
       }
+      "hapticIntensity" -> {
+          val argMap = call.arguments as? Map<String, Any>
+          val value = argMap?.get("set") as? Double
+
+          if (value != null) {
+              haptic.setHapticIntensity(value)
+          }
+
+          result.success(haptic.getHapticIntensity())
+      }
+      "hapticTime" -> {
+          val argMap = call.arguments as? Map<String, Any>
+          val value = argMap?.get("set") as? Double
+
+          if (value != null) {
+              haptic.setHapticTime(value)
+          }
+
+          result.success(haptic.getHapticTime())
+      }
       "haptic" -> {
         haptic.haptic()
         result.success("")

@@ -7,6 +7,24 @@ import 'package:flutter/services.dart';
 class HapticController {
   static const MethodChannel _channel = const MethodChannel('haptic_controller');
 
+  static Future<double> get hapticTime async {
+    final double result = await _channel.invokeMethod('hapticTime');
+    return result;
+  }
+
+  static void setHapticTime(double value) async {
+    await _channel.invokeMethod('hapticTime', {'set': value});
+  }
+
+  static Future<double> get hapticIntensity async {
+    final double result = await _channel.invokeMethod('hapticIntensity');
+    return result;
+  }
+
+  static void setHapticIntensity(double value) {
+    _channel.invokeMethod('hapticIntensity', {'set': value});
+  }
+
   static Future<bool> get canHaptic async {
     final bool result = await _channel.invokeMethod('canHaptic');
     return result;

@@ -15,17 +15,36 @@ class Haptic(@NonNull context: Context) {
     private val intensityMin = 0
     private val intensityMax = 255
 
+    private var hapticIntensity = intensityMax
+    private var hapticTime: Long = 100
+
     val canHaptic
     get() = vibrator.hasVibrator() 
+
+    fun getHapticIntensity(): Double {
+        return hapticIntensity / intensityMax.toDouble()
+    }
+
+    fun setHapticIntensity(value: Double) {
+        hapticIntensity = value.toIntensity(intensityMin, intensityMax)
+    }
+
+    fun getHapticTime(): Double {
+        return hapticTime / 1000.0
+    }
+
+    fun setHapticTime(value: Double) {
+        hapticTime = value.toMilliSecond()
+    }
 
     fun haptic() {
         if (!canHaptic) return
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(100), intArrayOf(255), -1))
+            vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(hapticTime), intArrayOf(hapticIntensity), -1))
         } else {
             @Suppress("DEPRECATION")
-            vibrator.vibrate(100)
+            vibrator.vibrate(hapticTime)
         }
     }
 

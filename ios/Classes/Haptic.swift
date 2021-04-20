@@ -13,11 +13,23 @@ import AudioToolbox
 class Haptic {
     static var canHaptic: Bool { return CHHapticEngine.capabilitiesForHardware().supportsHaptics }
     
-    public static let shared: Haptic = Haptic()
     var _engine: CHHapticEngine?
     
-    public static var defaultDuration:Double = 0.1
-    public static var defaultIntensity:Double = 1
+    private static var _hapticDuration:Double = 0.1
+    public static var hapticDuration:Double {
+        get { return _hapticDuration }
+        set(value) { _hapticDuration = value }
+    }
+    
+    private static var _hapticIntensity:Double = 1
+    public static var hapticIntensity:Double {
+        get { return _hapticIntensity }
+        set(value) {
+            if value > 1 { _hapticIntensity = 1 }
+            else if value < 0 { _hapticIntensity = 0 }
+            else {_hapticIntensity = value}            
+        }
+    }
     
     init() {
         guard Haptic.canHaptic else {
@@ -41,7 +53,7 @@ class Haptic {
             return
         }
         
-        hapticPattern(delayTime: [0], duration: [Haptic.defaultDuration], intensities: [Haptic.defaultIntensity])
+        hapticPattern(delayTime: [0], duration: [Haptic._hapticDuration], intensities: [Haptic._hapticIntensity])
     }
         
     func hapticPattern(delayTime:[Double], duration:[Double], intensities:[Double]) {

@@ -19,6 +19,26 @@ public class SwiftHapticControllerPlugin: NSObject, FlutterPlugin {
         case "canHaptic":
             result(Haptic.canHaptic)
             break
+        case "hapticTime":
+            if let args = call.arguments as? [String:NSNumber],
+                let value = args["set"]{
+                Haptic.hapticDuration = Double(truncating: value)
+                result(true)
+                break
+            } else {
+                result(Haptic.hapticDuration)
+                break
+            }
+        case "hapticIntensity":
+            if let args = call.arguments as? [String:NSNumber],
+                let value = args["set"]{
+                Haptic.hapticIntensity = Double(truncating: value)
+                result(true)
+                break
+            } else {
+                result(Haptic.hapticIntensity)
+                break
+            }
         case "haptic":
             SwiftHapticControllerPlugin.haptic.haptic()
             result(true)
